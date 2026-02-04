@@ -1,0 +1,36 @@
+## pipeline to checkout code from GitHub repository
+
+```groovy
+
+pipeline {
+    agent any
+    stages {
+        stage ('SCM checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/pythoncpp/ditiss-flask-demo.git'
+            }
+        }
+        stage ('docker image build') {
+            steps {
+                sh '/usr/bin/docker image build -t pythoncpp/flask-demo-image .'
+            }
+        }
+        stage ('docker login') {
+            steps {
+                sh 'echo dckr_pat_WiG2NZJ8py7I1a1MaIPEdPjoJSI | /usr/bin/docker login -u pythoncpp --password-stdin'
+            }
+        }
+        stage ('docker image push') {
+            steps {
+                sh '/usr/bin/docker image push pythoncpp/flask-demo-image'
+            }
+        }
+        stage ('remove existing service') {
+            steps {
+                sh '/usr/bin/docker service rm flask-service'
+            }
+        }
+    }
+}
+
+```

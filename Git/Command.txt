@@ -1,0 +1,12 @@
+git status 
+git init Initialized empty Git repository 
+git add abc.txt
+git add .
+git commit -m "my first check in"
+git config username
+git clone 
+git push origin main
+git pull
+git branch master
+git checkout main
+git merge
